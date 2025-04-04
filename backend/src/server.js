@@ -1,11 +1,11 @@
 // src/server.js
-const express = require('express');
-const { ApolloServer } = require('apollo-server-express');
-const dotenv = require('dotenv');
-const connectDB = require('./config/db');
-const typeDefs = require('./typeDefs');
-const resolvers = require('./resolvers');
-const authMiddleware = require('./middleware/auth');
+const express = require("express");
+const { ApolloServer } = require("apollo-server-express");
+const dotenv = require("dotenv");
+const connectDB = require("./config/db");
+const typeDefs = require("./typeDefs");
+const resolvers = require("./resolvers");
+const authMiddleware = require("./middleware/auth");
 
 dotenv.config();
 
@@ -13,7 +13,7 @@ dotenv.config();
 const app = express();
 
 // Middleware to parse JSON
-app.use(express.json({ limit: "10mb" })); // or higher if needed
+app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
 // Use our custom auth middleware to attach user info to req
@@ -37,7 +37,8 @@ const server = new ApolloServer({
   },
 });
 
-async function startServer() {
+// For Vercel deployment - use an async function
+async function initServer() {
   await server.start();
   server.applyMiddleware({ app });
 
@@ -45,14 +46,27 @@ async function startServer() {
   connectDB();
 
   // default route for the home page
-  app.get('/', (req, res) => {
-    res.send("Employee Management System API is Live! Visit /graphql to access the GraphQL API.");
+  app.get("/", (req, res) => {
+    res.send(
+      "Employee Management System API is Live! Visit /graphql to access the GraphQL API."
+    );
   });
 
-  const PORT = process.env.PORT || 4000;
-  app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}${server.graphqlPath}`);
-  });
+  return app;
 }
 
-startServer();
+// For local development
+if (process.env.NODE_ENV !== "production") {
+  (async () => {
+    const localApp = await initServer();
+    const PORT = process.env.PORT || 4000;
+    localApp.listen(PORT, () => {
+      console.log(
+        `Server running at http://localhost:${PORT}${server.graphqlPath}`
+      );
+    });
+  })();
+}
+
+// Export for Vercel serverless function
+module.exports = initServer;
