@@ -5,7 +5,7 @@
       "src": "frontend/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "frontend/dist/frontend/browser"
+        "distDir": "dist/frontend/browser"
       }
     },
     {
@@ -16,12 +16,19 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "backend/src/server.js"
+      "dest": "/backend/src/server.js"
     },
-    { "handle": "filesystem" },
+    {
+      "src": "/graphql",
+      "dest": "/backend/src/server.js"
+    },
+    {
+      "src": "/(.*\\.(js|css|ico|json|txt))",
+      "dest": "/dist/frontend/browser/$1"
+    },
     {
       "src": "/(.*)",
-      "dest": "frontend/dist/frontend/browser/index.html"
+      "dest": "/dist/frontend/browser/index.html"
     }
   ]
 }

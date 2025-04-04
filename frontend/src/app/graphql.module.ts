@@ -9,8 +9,9 @@ import { HttpLink } from 'apollo-angular/http';
 import { InMemoryCache, ApolloLink } from '@apollo/client/core';
 
 import { setContext } from '@apollo/client/link/context';
+import { environment } from '../environments/environment';
 
-const uri = 'http://localhost:4001/graphql'; // Replace with your GraphQL server endpoint
+const uri = environment.graphqlUri; // This will use the correct endpoint based on the build
 
 export function createApollo(httpLink: HttpLink) {
   const basic = setContext((operation, context) => ({
