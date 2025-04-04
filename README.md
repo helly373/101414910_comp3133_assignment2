@@ -76,7 +76,7 @@ COMP3133_Assignment1/
    Create a `.env` file in the project root with the following content:
 
    ```ini
-   PORT=4000
+   PORT=4001
    MONGODB_URI=<your_mongodb_connection_string>
    JWT_SECRET=<your_jwt_secret>
    TOKEN_EXPIRES_IN=1h
@@ -103,7 +103,7 @@ COMP3133_Assignment1/
 Access the GraphQL Playground at:
 
 ```
-http://localhost:4000/graphql
+http://localhost:4001/graphql
 ```
 
 For protected operations, include the JWT token in your HTTP headers:
@@ -250,4 +250,4 @@ This project is for educational purposes. © 2025 Employee Management System Bac
 ## Contact
 
 For questions or issues, please contact:  
-**Project Contributor:** Nisarg Bhatti
+**Project Contributor:** Chauhan Helly
