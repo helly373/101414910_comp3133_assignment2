@@ -1,0 +1,20 @@
+version: '3'
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    ports:
+      - "4001:4001"
+    environment:
+      - PORT=4001
+      - MONGODB_URI=mongodb+srv://hellychauhan37:Password1234@ems.u7j6s.mongodb.net/assignment1?retryWrites=true&w=majority&appName=EMS
+      - JWT_SECRET=7f4cbb10c0eb8ceff712f9b28db625b7b9b694b804e1af150d26267318d6e4587330dc39d2971147d1d4d722defc1628421584e2db03bb0766c0237d50bd76f3
+      - TOKEN_EXPIRES_IN=2h
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "8080:80"
